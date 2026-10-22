@@ -1,0 +1,26 @@
+# Local secrets and credentials
+secrets.h
+secrets.local.h
+.env
+.env.*
+credentials.json
+
+# Python / Jupyter local state
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Arduino build outputs
+build/
+*.bin
+*.elf
+*.map
+*.hex
+*.o
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
