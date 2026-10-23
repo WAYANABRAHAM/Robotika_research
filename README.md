@@ -1,32 +1,30 @@
-# Robotika_Research
+# Robotika_Research — Kit iMCLab
 
-Kumpulan program dan dokumentasi eksperimen robotika menggunakan ESP32 dan Kit iMCLab.
+Program dan dokumentasi praktikum robotika ESP32 disusun per modul seperti struktur berikut:
 
-## Isi repositori
+```text
+01_on_off_motor/
+02_kecepatan_pwm_serial/
+03_python_serial_control/
+04_blynk_dashboard/
+05_ota_firmware/
+ETS/
+```
 
-- `on_off_Motor.ino` — kendali motor DC dan LED melalui Serial Monitor (`1` = ON, `0` = OFF).
-- `on_off_Motor_blynk_wifi.ino` — kendali ON/OFF melalui Blynk Virtual Pin V0.
-- `on_off_Motor_OTA.ino` — kendali Blynk dengan pembaruan firmware lokal melalui ArduinoOTA.
-- `Tes_IMCLab_pilih_port_otomatis.ipynb` — contoh Python/pySerial untuk mendeteksi port dan mengirim perintah serial.
-- `Test_Port_Serial.ipynb` — contoh dasar pengiriman perintah serial dari Python.
-- `Rangkuman_Riset_Modul_Robotika_iMCLab.pdf` — rangkuman riset dan analisis modul.
+## Modul
+
+1. **01_on_off_motor** — perintah Serial `1` menyalakan motor, `0` mematikan.
+2. **02_kecepatan_pwm_serial** — duty PWM dapat dinaikkan/diturunkan melalui Serial (`u/+`, `d/-`). Ini kontrol open-loop, bukan pembacaan RPM.
+3. **03_python_serial_control** — program Python host-side memakai pySerial; bukan MicroPython pada ESP32.
+4. **04_blynk_dashboard** — switch Blynk mengirim nilai Virtual Pin V0 (Integer 0/1).
+5. **05_ota_firmware** — Blynk untuk kendali motor dan ArduinoOTA untuk pembaruan firmware lokal. Jalur OTA ini bukan Blynk.Air.
+
+Setiap modul punya README sendiri. Satu sketch `.ino` adalah satu program; buka/compile tiap modul secara terpisah.
 
 ## Kredensial
 
-Jangan simpan token Blynk atau password Wi-Fi di repositori. Sketch Blynk membaca konfigurasi dari `secrets.h` bila file lokal itu tersedia; bila tidak, sketch memakai `secrets.example.h` yang hanya berisi placeholder. Untuk penggunaan pribadi:
+Berkas `secrets.example.h` hanya berisi placeholder. Untuk penggunaan lokal, salin menjadi `secrets.h` dalam folder modul yang sesuai dan isi nilai baru. `secrets.h` diabaikan Git; jangan pernah commit token Blynk, password Wi-Fi, atau password OTA. Token yang pernah dibagikan sebelumnya sebaiknya diregenerasi sebelum dipakai kembali.
 
-1. Salin `secrets.example.h` menjadi `secrets.h`.
-2. Isi kredensial baru secara lokal.
-3. Jangan pernah menjalankan `git add -f secrets.h` atau mengunggah file tersebut.
+## Keselamatan dan batas uji
 
-`secrets.h` sudah masuk `.gitignore`. Token yang pernah terekspos sebaiknya diregenerasi di Blynk Console sebelum digunakan lagi.
-
-## Pengujian dan cara menjalankan
-
-- Sketch ESP32 harus dikompilasi satu per satu sebagai sketch terpisah; setiap `.ino` adalah program mandiri dengan `setup()` dan `loop()` sendiri.
-- Sketch dasar memakai Serial Monitor 115200 bps. Kirim karakter `1` untuk ON dan `0` untuk OFF.
-- Sketch Blynk memerlukan datastream Virtual Pin V0 bertipe Integer dengan rentang 0–1 dan widget Switch yang terhubung ke V0.
-- Sketch OTA perlu diunggah pertama kali melalui USB. ArduinoOTA pada sketch ini adalah jalur update lokal; Blynk tetap menjadi jalur kontrol motor.
-- Notebook Python memerlukan `pyserial`. Tutup Serial Monitor sebelum notebook membuka port yang sama.
-
-File notebook menyertakan output historis. Output tersebut bukan hasil uji ulang dalam proses penyiapan repositori ini.
+Motor harus memakai driver/catu daya yang sesuai—jangan hubungkan motor DC langsung ke GPIO ESP32. Firmware memulai dengan motor OFF dan OTA mematikan motor saat update mulai. Hasil compile tidak membuktikan motor bergerak, perangkat online di Blynk, atau transfer OTA berhasil; status pengujian dicatat di `ETS/README.md`.
