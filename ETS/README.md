@@ -19,5 +19,3 @@ Skrip `tes_imclab_naik_turun.py` lulus syntax lint saat ditulis. Notebook tidak 
 
 - `Laporan_Penataan_ETS.docx` — ringkasan modul, perubahan kode, hasil build, dan batas pengujian.
 - `Laporan_Penataan_ETS.pdf` — versi PDF untuk dibaca/cetak.
-
-Identitas mahasiswa dibiarkan kosong. Jangan tambahkan token Blynk, Wi-Fi, atau kata sandi OTA ke laporan atau repositori.
